@@ -12,7 +12,16 @@ class PersistentMap {
   }
 
   import () {}
-  set () {}
+
+  async set (key, value) {
+    await this.persistentMap.put({
+      _id: key,
+      value: value
+    });
+    this.lazyMap.set(key, value);
+    return this;
+  }
+
   get () {}
   delete () {}
 }
