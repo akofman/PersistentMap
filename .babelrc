@@ -1,0 +1,20 @@
+{
+  "presets": [
+    "es2015",
+    "es2016"
+  ],
+  "plugins": [
+    "babel-plugin-syntax-trailing-function-commas",
+    "babel-plugin-syntax-async-functions",
+    "babel-plugin-transform-object-rest-spread",
+    "babel-plugin-transform-regenerator",
+    "babel-plugin-add-module-exports",
+    "babel-plugin-transform-function-bind",
+    "babel-plugin-transform-export-extensions",
+    ["babel-plugin-transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true
+    }]
+  ]
+}
