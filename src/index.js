@@ -7,14 +7,14 @@ import create from './create';
 
 class PersistentMap {
   constructor (name) {
-    create(name);
+    this.lazyMap = new Map();
+    this.persistentMap = create(name);
   }
 
   import () {}
   set () {}
   get () {}
   delete () {}
-
 }
 
 export default PersistentMap;
