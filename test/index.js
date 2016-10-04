@@ -16,7 +16,7 @@ describe('PersistentMap', function () {
     return PersistentMap('myMap').then((myMap) => {
       expect(myMap.set).toExist();
       expect(myMap.get).toExist();
-      expect(myMap.size).toExist();
+      expect(myMap.size).toEqual(0);
       expect(myMap.delete).toExist();
     });
   });
@@ -53,7 +53,7 @@ describe('PersistentMap', function () {
 
   it('should return the number of entries of a map', function () {
     return PersistentMap('myMap').then((myMap) => {
-      expect(myMap.size()).toEqual(0);
+      expect(myMap.size).toEqual(0);
     });
   });
 
