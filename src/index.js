@@ -16,7 +16,7 @@ export const createPersistentMap = async (name) => {
     set: (key, value) => _set(persistentMap, lazyMap, key, value),
     get: (key) => _get(lazyMap, key),
     size: () => _size(lazyMap),
-    delete: _delete
+    delete: (key) => _delete(persistentMap, lazyMap, key)
   };
 };
 
@@ -36,6 +36,8 @@ const _size = (lazyMap) => {
   return lazyMap.size;
 };
 
-const _delete = () => {
-
+const _delete = async (persistentMap, lazyMap, key) => {
+  const entry = await persistentMap.get(key);
+  await persistentMap.remove(entry);
+  lazyMap.delete(key);
 };

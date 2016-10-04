@@ -8,17 +8,20 @@ describe('PersistentMap', function () {
     return db.destroy();
   };
 
+  after(() => {
+    destroy('myMap');
+  });
+
   it('should return an instance of a PersistentMap', function () {
     return createPersistentMap('myMap').then((myMap) => {
       expect(myMap.set).toExist();
       expect(myMap.get).toExist();
       expect(myMap.size).toExist();
       expect(myMap.delete).toExist();
-      return destroy('myMap');
     });
   });
 
-  it('should persist a value and return the updated instance of the PersistentMap', function () {
+  it('should persist a value', function () {
     return createPersistentMap('myMap').then((myMap) => {
       return myMap.set('myItem', 1).then(() => {
         expect(myMap.get('myItem')).toEqual(1);
@@ -29,7 +32,14 @@ describe('PersistentMap', function () {
   it('should retrieve a value', function () {
     return createPersistentMap('myMap').then((myMap) => {
       expect(myMap.get('myItem')).toEqual(1);
-      return destroy('myMap');
+    });
+  });
+
+  it('should delete a value', function () {
+    return createPersistentMap('myMap').then((myMap) => {
+      return myMap.delete('myItem').then(() => {
+        expect(myMap.get('myItem')).toNotExist();
+      });
     });
   });
 });
