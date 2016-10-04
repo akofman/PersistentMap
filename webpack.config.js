@@ -29,7 +29,7 @@ module.exports = {
   devtool: 'source-map',
   output: {
     path: 'dist',
-    filename: 'data.js',
+    filename: 'PersistentMap.js',
     libraryTarget: 'umd'
   },
   module: {

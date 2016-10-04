@@ -20,12 +20,12 @@ export const PersistentMap = async (name) => {
     lazyMap.set(row.doc._id, row.doc.value);
   });
 
-  Object.getOwnPropertyNames(Map.prototype).forEach((method) => {
-    if (typeof persistentMap[method] === 'undefined') {
-      if (typeof lazyMap[method] === 'function') {
-        persistentMap[method] = (...args) => lazyMap[method](...args);
+  Object.getOwnPropertyNames(Map.prototype).forEach((prop) => {
+    if (typeof persistentMap[prop] === 'undefined') {
+      if (typeof lazyMap[prop] === 'function') {
+        persistentMap[prop] = (...args) => lazyMap[prop](...args);
       } else {
-        persistentMap[method] = lazyMap[method];
+        persistentMap[prop] = lazyMap[prop];
       }
     }
   });
