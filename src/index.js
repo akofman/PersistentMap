@@ -5,7 +5,7 @@
 
 import PouchDB from 'pouchdb';
 
-export const createPersistentMap = async (name) => {
+export const PersistentMap = async (name) => {
   const lazyMap = new Map();
   const persistentMap = new PouchDB(name);
   const docs = await persistentMap.allDocs({include_docs: true});
@@ -15,6 +15,7 @@ export const createPersistentMap = async (name) => {
   return {
     set: (key, value) => _set(persistentMap, lazyMap, key, value),
     get: (key) => _get(lazyMap, key),
+    getSync: (key) => _getSync(persistentMap, key),
     size: () => _size(lazyMap),
     delete: (key) => _delete(persistentMap, lazyMap, key)
   };
@@ -30,6 +31,11 @@ const _set = async (persistentMap, lazyMap, key, value) => {
 
 const _get = (lazyMap, key) => {
   return lazyMap.get(key);
+};
+
+const _getSync = async (persistentMap, key) => {
+  const entry = await persistentMap.get(key);
+  return entry.value;
 };
 
 const _size = (lazyMap) => {

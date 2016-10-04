@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { createPersistentMap } from '../src';
+import { PersistentMap } from '../src';
 import PouchDB from 'pouchdb';
 
 describe('PersistentMap', function () {
@@ -13,7 +13,7 @@ describe('PersistentMap', function () {
   });
 
   it('should return an instance of a PersistentMap', function () {
-    return createPersistentMap('myMap').then((myMap) => {
+    return PersistentMap('myMap').then((myMap) => {
       expect(myMap.set).toExist();
       expect(myMap.get).toExist();
       expect(myMap.size).toExist();
@@ -22,7 +22,7 @@ describe('PersistentMap', function () {
   });
 
   it('should persist a value', function () {
-    return createPersistentMap('myMap').then((myMap) => {
+    return PersistentMap('myMap').then((myMap) => {
       return myMap.set('myItem', 1).then(() => {
         expect(myMap.get('myItem')).toEqual(1);
       });
@@ -30,13 +30,21 @@ describe('PersistentMap', function () {
   });
 
   it('should retrieve a value', function () {
-    return createPersistentMap('myMap').then((myMap) => {
+    return PersistentMap('myMap').then((myMap) => {
       expect(myMap.get('myItem')).toEqual(1);
     });
   });
 
+  it('should retrieve a synced value', function () {
+    return PersistentMap('myMap').then((myMap) => {
+      return myMap.getSync('myItem').then((value) => {
+        expect(value).toEqual(1);
+      });
+    });
+  });
+
   it('should delete a value', function () {
-    return createPersistentMap('myMap').then((myMap) => {
+    return PersistentMap('myMap').then((myMap) => {
       return myMap.delete('myItem').then(() => {
         expect(myMap.get('myItem')).toNotExist();
       });
