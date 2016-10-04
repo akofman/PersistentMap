@@ -56,4 +56,12 @@ describe('PersistentMap', function () {
       expect(myMap.size()).toEqual(0);
     });
   });
+
+  it('should return if an entry exists in the map', function () {
+    return PersistentMap('myMap').then((myMap) => {
+      return myMap.set('myItem', 1).then(() => {
+        expect(myMap.has('myItem')).toBeTruthy();
+      });
+    });
+  });
 });
