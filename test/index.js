@@ -50,4 +50,10 @@ describe('PersistentMap', function () {
       });
     });
   });
+
+  it('should return the number of entries of a map', function () {
+    return PersistentMap('myMap').then((myMap) => {
+      expect(myMap.size()).toEqual(0);
+    });
+  });
 });
