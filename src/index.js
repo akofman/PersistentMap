@@ -3,27 +3,39 @@
 * @module PersistentMap
 */
 
-import create from './create';
+import PouchDB from 'pouchdb';
 
-class PersistentMap {
-  constructor (name) {
-    this.lazyMap = new Map();
-    this.persistentMap = create(name);
-  }
+export const createPersistentMap = async (name) => {
+  const lazyMap = new Map();
+  const persistentMap = new PouchDB(name);
+  const docs = await persistentMap.allDocs({include_docs: true});
+  docs.rows.forEach((row) => {
+    lazyMap.set(row.doc._id, row.doc.value);
+  });
+  return {
+    set: (key, value) => _set(persistentMap, lazyMap, key, value),
+    get: (key) => _get(lazyMap, key),
+    size: () => _size(lazyMap),
+    delete: _delete
+  };
+};
 
-  import () {}
+const _set = async (persistentMap, lazyMap, key, value) => {
+  await persistentMap.put({
+    _id: key,
+    value: value
+  });
+  lazyMap.set(key, value);
+};
 
-  async set (key, value) {
-    await this.persistentMap.put({
-      _id: key,
-      value: value
-    });
-    this.lazyMap.set(key, value);
-    return this;
-  }
+const _get = (lazyMap, key) => {
+  return lazyMap.get(key);
+};
 
-  get () {}
-  delete () {}
-}
+const _size = (lazyMap) => {
+  return lazyMap.size;
+};
 
-export default PersistentMap;
+const _delete = () => {
+
+};
