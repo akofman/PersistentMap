@@ -2,11 +2,11 @@
   "name": "PersistentMap",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "PersistentMap.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Synchronized",
+  "author": "Alexis Kofman",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.6.5",
