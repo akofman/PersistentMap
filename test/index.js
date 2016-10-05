@@ -1,8 +1,8 @@
 import expect from 'expect';
-import PersistentMap from '../src';
+import persistentMap from '../src';
 import PouchDB from 'pouchdb';
 
-describe('PersistentMap', function () {
+describe('persistentMap', function () {
   const destroy = (name) => {
     const db = new PouchDB(name);
     return db.destroy();
@@ -13,7 +13,7 @@ describe('PersistentMap', function () {
   });
 
   it('should return a Map plus some extra methods', function () {
-    return PersistentMap('myMap').then((myMap) => {
+    return persistentMap('myMap').then((myMap) => {
       expect(myMap.set).toExist();
       expect(myMap.get).toExist();
       expect(myMap.has).toExist();
@@ -28,7 +28,7 @@ describe('PersistentMap', function () {
   });
 
   it('should set a value', function () {
-    return PersistentMap('myMap').then((myMap) => {
+    return persistentMap('myMap').then((myMap) => {
       return myMap.set('myItem', 1).then(() => {
         expect(myMap.get('myItem')).toEqual(1);
       });
@@ -36,7 +36,7 @@ describe('PersistentMap', function () {
   });
 
   it('should delete a value', function () {
-    return PersistentMap('myMap').then((myMap) => {
+    return persistentMap('myMap').then((myMap) => {
       return myMap.delete('myItem').then(() => {
         expect(myMap.get('myItem')).toNotExist();
       });

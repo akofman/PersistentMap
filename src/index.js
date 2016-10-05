@@ -1,15 +1,15 @@
 /**
 *
-* @module PersistentMap
+* @module persistentMap
 */
 
 import PouchDB from 'pouchdb';
 
-const PersistentMap = async (name) => {
+const persistentMap = async (name) => {
   const lazyMap = new Map();
   const db = new PouchDB(name);
   const docs = await db.allDocs({include_docs: true});
-  const persistentMap = {
+  const pMap = {
     set: (key, value) => _set(db, lazyMap, key, value),
     delete: (key) => _delete(db, lazyMap, key)
   };
@@ -20,16 +20,16 @@ const PersistentMap = async (name) => {
   });
 
   Object.getOwnPropertyNames(Map.prototype).forEach((prop) => {
-    if (typeof persistentMap[prop] === 'undefined') {
+    if (typeof pMap[prop] === 'undefined') {
       if (typeof lazyMap[prop] === 'function') {
-        persistentMap[prop] = (...args) => lazyMap[prop](...args);
+        pMap[prop] = (...args) => lazyMap[prop](...args);
       } else {
-        persistentMap[prop] = lazyMap[prop];
+        pMap[prop] = lazyMap[prop];
       }
     }
   });
 
-  return persistentMap;
+  return pMap;
 };
 
 const _set = async (db, lazyMap, key, value) => {
@@ -46,4 +46,4 @@ const _delete = async (db, lazyMap, key) => {
   lazyMap.delete(key);
 };
 
-export default PersistentMap;
+export default persistentMap;
