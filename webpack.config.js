@@ -32,6 +32,9 @@ module.exports = {
     filename: 'PersistentMap.js',
     libraryTarget: 'umd'
   },
+  externals: {
+    pouchdb: 'umd pouchdb'
+  },
   module: {
     loaders: [
       {
