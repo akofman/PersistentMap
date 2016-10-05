@@ -12,33 +12,25 @@ describe('PersistentMap', function () {
     return destroy('myMap');
   });
 
-  it('should return an instance of a PersistentMap', function () {
+  it('should return a Map plus some extra methods', function () {
     return PersistentMap('myMap').then((myMap) => {
       expect(myMap.set).toExist();
       expect(myMap.get).toExist();
+      expect(myMap.has).toExist();
+      expect(myMap.clear).toExist();
       expect(myMap.size).toEqual(0);
       expect(myMap.delete).toExist();
+      expect(myMap.forEach).toExist();
+      expect(myMap.keys).toExist();
+      expect(myMap.values).toExist();
+      expect(myMap.entries).toExist();
     });
   });
 
-  it('should persist a value', function () {
+  it('should set a value', function () {
     return PersistentMap('myMap').then((myMap) => {
       return myMap.set('myItem', 1).then(() => {
         expect(myMap.get('myItem')).toEqual(1);
-      });
-    });
-  });
-
-  it('should retrieve a value', function () {
-    return PersistentMap('myMap').then((myMap) => {
-      expect(myMap.get('myItem')).toEqual(1);
-    });
-  });
-
-  it('should retrieve a synced value', function () {
-    return PersistentMap('myMap').then((myMap) => {
-      return myMap.getSync('myItem').then((value) => {
-        expect(value).toEqual(1);
       });
     });
   });
@@ -47,20 +39,6 @@ describe('PersistentMap', function () {
     return PersistentMap('myMap').then((myMap) => {
       return myMap.delete('myItem').then(() => {
         expect(myMap.get('myItem')).toNotExist();
-      });
-    });
-  });
-
-  it('should return the number of entries of a map', function () {
-    return PersistentMap('myMap').then((myMap) => {
-      expect(myMap.size).toEqual(0);
-    });
-  });
-
-  it('should return if an entry exists in the map', function () {
-    return PersistentMap('myMap').then((myMap) => {
-      return myMap.set('myItem', 1).then(() => {
-        expect(myMap.has('myItem')).toBeTruthy();
       });
     });
   });

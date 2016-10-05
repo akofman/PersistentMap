@@ -11,7 +11,6 @@ const PersistentMap = async (name) => {
   const docs = await db.allDocs({include_docs: true});
   const persistentMap = {
     set: (key, value) => _set(db, lazyMap, key, value),
-    getSync: (key) => _getSync(db, key),
     delete: (key) => _delete(db, lazyMap, key)
   };
 
@@ -39,11 +38,6 @@ const _set = async (db, lazyMap, key, value) => {
     value: value
   });
   lazyMap.set(key, value);
-};
-
-const _getSync = async (db, key) => {
-  const entry = await db.get(key);
-  return entry.value;
 };
 
 const _delete = async (db, lazyMap, key) => {
