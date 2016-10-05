@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { PersistentMap } from '../src';
+import PersistentMap from '../src';
 import PouchDB from 'pouchdb';
 
 describe('PersistentMap', function () {
@@ -9,7 +9,7 @@ describe('PersistentMap', function () {
   };
 
   after(() => {
-    destroy('myMap');
+    return destroy('myMap');
   });
 
   it('should return an instance of a PersistentMap', function () {

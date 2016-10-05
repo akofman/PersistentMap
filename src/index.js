@@ -5,7 +5,7 @@
 
 import PouchDB from 'pouchdb';
 
-export const PersistentMap = async (name) => {
+const PersistentMap = async (name) => {
   const lazyMap = new Map();
   const db = new PouchDB(name);
   const docs = await db.allDocs({include_docs: true});
@@ -51,3 +51,5 @@ const _delete = async (db, lazyMap, key) => {
   await db.remove(entry);
   lazyMap.delete(key);
 };
+
+export default PersistentMap;
